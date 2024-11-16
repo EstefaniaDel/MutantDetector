@@ -1,5 +1,9 @@
 def is_mutant(dna):
     n = len(dna)
+    for sequence in dna:
+        if len(sequence) != n:
+            raise ValueError("Todas las cadenas de ADN deben tener la misma longitud")
+    
     sequences = 0
 
     def count_sequences(line):
@@ -31,4 +35,4 @@ def is_mutant(dna):
             if i + 3 < n and j - 3 >= 0:  
                 sequences += count_sequences(dna[i][j] + dna[i + 1][j - 1] + dna[i + 2][j - 2] + dna[i + 3][j - 3])
 
-    return sequences > 1  
+    return sequences > 1

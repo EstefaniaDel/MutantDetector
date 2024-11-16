@@ -1,19 +1,33 @@
-from app.mutant_service import MutantService
-from app import app
 from flask import request, jsonify
+from app.mutant_service import MutantService
 
-@app.route('/mutant', methods=['POST'])
-def post_mutant():
-    data = request.json
-    dna = data.get('dna')
+class MutantController:
+    def __init__(self, app):
+        self.app = app
+        self.mutant_service = MutantService()
+        self.init_routes()
 
-    if MutantService().detect_mutant(dna):
-        return jsonify({"message": "Mutant detected"}), 200
-    else:
-        return jsonify({"message": "Not a mutant"}), 403
+    def init_routes(self):
+        @self.app.route('/mutant', methods=['POST'])
+        def post_mutant():
+            data = request.json
+            dna = data.get('dna')
 
-@app.route('/stats', methods=['GET'])
-def get_stats():
-    mutant_service = MutantService()
-    stats = mutant_service.get_stats()
-    return jsonify(stats)
+            if not isinstance(dna, list) or not all(isinstance(seq, str) for seq in dna):
+                return jsonify({"error": "La entrada debe ser una lista de cadenas de ADN"}), 400
+            
+            try:
+                if self.mutant_service.detect_mutant(dna):
+                    return jsonify({"message": "Mutant detected"}), 200
+                else:
+                    return jsonify({"message": "Not a mutant"}), 403
+            except ValueError as e:
+                return jsonify({"error": str(e)}), 400
+
+        @self.app.route('/stats', methods=['GET'])
+        def get_stats():
+            try:
+                stats = self.mutant_service.get_stats()
+                return jsonify(stats)
+            except ValueError as e:
+                return jsonify({"error": str(e)}), 400
