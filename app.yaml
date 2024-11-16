@@ -1,9 +1,9 @@
-runtime: python39
+runtime: python3.12
 env: flex
 entrypoint: gunicorn -b :$PORT run:app
 
 runtime_config:
-  operating_system: ubuntu22
+  operating_system: ubuntu22.04
 
 manual_scaling:
   instances: 1
