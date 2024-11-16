@@ -18,7 +18,8 @@ services:
     environment:
       SQLALCHEMY_DATABASE_URI: mysql+pymysql://${MYSQL_USER}:${MYSQL_PASSWORD}@db:3306/${MYSQL_DATABASE}
     ports:
-      - "5000:5000"
+      - "8080:8080"
+    command: gunicorn -b 0.0.0.0:8080 run:app
 
 volumes:
   db_data:
