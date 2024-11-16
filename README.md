@@ -3,17 +3,8 @@
 ## Description
 This project is a simple tool to detect mutants in a given DNA sequence. It is able to detect horizontal, vertical and diagonal mutants. The project is written in Python and uses the Flask framework to expose a REST API. The API has two endpoints, one to check if a DNA sequence is mutant and another to get the statistics of the DNA sequences analyzed.
 
+*The .env is visible since it is a test*
 ## Requirements
-
-Install
-
-```bash
-- Linux
-- Python 
-- MySQL
-```
-
-or
 
 ```bash
 - Linux
@@ -27,21 +18,6 @@ or
 git clone 
 ```
 
-### First Steps
-1. Create a virtual environment
-```bash
-python3 -m venv venv
-```
-2. Activate the virtual environment
-```bash
-source venv/bin/activate
-```
-
-3. Install the dependencies
-```bash
-pip install -r requirements.txt
-```
-
 ## Usage with Docker
 
 1. Run the application
@@ -52,18 +28,6 @@ docker-compose up --build
 2. Down the application
 ```bash
 docker-compose down
-```
-
-## Usage without Docker
-
-1. Start the MySQL service
-```bash
-sudo service mysql start
-```
-
-2. Run the application
-```bash
-python run.py
 ```
 
 ## API Endpoints
@@ -114,4 +78,3 @@ GET /stats/
 python -m unittest tests/test_mutant_detector.py 
 ```
 
-*The .env is not hidden because it is a test .env*
