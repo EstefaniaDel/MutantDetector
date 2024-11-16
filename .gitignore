@@ -2,4 +2,4 @@ venv
 
 myproject/__pycache__/
 
-mysql
+*.pyc
