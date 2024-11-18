@@ -3,3 +3,7 @@ venv
 myproject/__pycache__/
 
 *.pyc
+
+frontend/node_modules/
+*.package-lock.json
+*.package.json

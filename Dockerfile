@@ -10,6 +10,7 @@ COPY . .
 
 EXPOSE 8080
 
-# CMD ["python", "run.py"]
+COPY script/wait-for-it.sh .
+RUN chmod +x script/wait-for-it.sh
 
-CMD ["gunicorn", "-b", "0.0.0.0:8080", "run:app"]
+CMD ["./wait-for-it.sh", "db:3306", "--", "gunicorn", "-b", "0.0.0.0:8080", "run:app"]

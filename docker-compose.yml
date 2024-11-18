@@ -10,16 +10,35 @@ services:
       - "3307:3306"
     volumes:
       - db_data:/var/lib/mysql
+    networks:
+      - my_network
 
   app:
     build: .
     depends_on:
       - db
     environment:
-      SQLALCHEMY_DATABASE_URI: mysql+pymysql://${MYSQL_USER}:${MYSQL_PASSWORD}@db:3306/${MYSQL_DATABASE}
+      SQLALCHEMY_DATABASE_URI: ${SQLALCHEMY_DATABASE_URI}
     ports:
       - "8080:8080"
     command: gunicorn -b 0.0.0.0:8080 run:app
+    networks:
+      - my_network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - app
+    networks:
+      - my_network
 
 volumes:
   db_data:
+
+networks:
+  my_network:
+    driver: bridge
